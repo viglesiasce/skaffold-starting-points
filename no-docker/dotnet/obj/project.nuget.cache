@@ -1,0 +1,8 @@
+{
+  "version": 2,
+  "dgSpecHash": "/TcyS3zEfo/9I2YLbkAaUsTMJKWoW05zQovZPwbJYV/cCMydFphlwagzas2NbcmVghDUf08/HFPOWPsuy7ny9Q==",
+  "success": true,
+  "projectFilePath": "/Users/viglesias/git/skaffold-starting-points/no-docker/dotnet/dotnet.csproj",
+  "expectedPackageFiles": [],
+  "logs": []
+}
