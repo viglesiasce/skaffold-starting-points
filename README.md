@@ -8,7 +8,7 @@ There are 4 categories of starting points
 
 1. No Dockerfile and No Kubernetes config ([`no-docker`](./no-docker))
 2. Dockerfile but No Kubernetes config ([`dockerized`](./dockerized))
-3. Dockerfile and Docker Compose ([`docker-compose`](./dockerized))
+3. Dockerfile and Docker Compose ([`docker-compose`](./docker-compose))
 4. Dockerfile and Helm Chart ([`helm`](./helm))
 5. Dockerfile and Kustomizations ([`kustomize`](./kustomize))
 
