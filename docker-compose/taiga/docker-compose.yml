@@ -1,0 +1,91 @@
+version: '3'
+
+services:
+  back:
+    image: dockertaiga/back:${VERSION}
+    container_name: taiga-back
+    restart: unless-stopped
+    depends_on:
+      - db
+      - events
+    networks:
+      - default
+    ports:
+      - 80:8000
+    volumes:
+      - ./data/media:/taiga-media
+      - ./conf/back:/taiga-conf
+    env_file:
+      - variables.env
+
+  front:
+    image: dockertaiga/front:${VERSION}
+    container_name: taiga-front
+    restart: unless-stopped
+    ports:
+      - 80:80
+    networks:
+      - default
+    volumes:
+      - ./conf/front:/taiga-conf
+    env_file:
+      - variables.env
+
+  events:
+    image: dockertaiga/events:${VERSION}
+    container_name: taiga-events
+    restart: unless-stopped
+    ports:
+      - 80:80
+    depends_on:
+      - rabbit
+    networks:
+      - default
+    env_file:
+      - variables.env
+
+  db:
+    image: postgres:12-alpine
+    container_name: taiga-db
+    restart: unless-stopped
+    networks:
+      - default
+    ports:
+      - 5432:5432
+    env_file:
+      - variables.env
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+
+  rabbit:
+    image: dockertaiga/rabbit
+    container_name: taiga-rabbit
+    restart: unless-stopped
+    ports:
+    - 5672
+    networks:
+      - default
+    env_file:
+      - variables.env
+
+  proxy:
+    image: dockertaiga/proxy
+    container_name: taiga-proxy
+    restart: unless-stopped
+    depends_on:
+      - back
+      - front
+      - events
+    networks:
+      - default
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      #- ./cert:/taiga-cert
+      - ./conf/proxy:/taiga-conf
+    env_file:
+      - variables.env
+
+networks:
+  default:
